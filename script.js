@@ -14,6 +14,10 @@ const productList = document.getElementById("product-list");
 const cartinglist=document.getElementById("cart-list");
 // Render product list
 function renderProducts() {
+	  const savedCart = JSON.parse(sessionStorage.getItem('cart'));
+  if (savedCart) {
+    cart.push(...savedCart);
+  }
   products.forEach((product) => {
     const li = document.createElement("li");
     li.innerHTML = `${product.name} - $${product.price} <button class="add-to-cart-btn" data-id="${product.id}">Add to Cart</button>`;
@@ -34,15 +38,15 @@ function addToCart(productId) {
   const product = products.find(p => p.id === productId);
   if (product) {
     cart.push(product);
+    sessionStorage.setItem('cart', JSON.stringify(cart));
     renderCart();
   }
 }
-
-// Remove item from cart
 function removeFromCart(productId) {
   const index = cart.findIndex(p => p.id === productId);
   if (index > -1) {
     cart.splice(index, 1);
+    sessionStorage.setItem('cart', JSON.stringify(cart));
     renderCart();
   }
 }
@@ -60,6 +64,7 @@ function renderCart() {
 // Clear cart
 function clearCart() {
   cart.length = 0;
+  sessionStorage.setItem('cart', JSON.stringify(cart));
   renderCart();
 }
 
