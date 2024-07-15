@@ -26,7 +26,6 @@ function renderProducts() {
   }));
 }
 
-}
 // Create a cart array
 const cart = [];
 
